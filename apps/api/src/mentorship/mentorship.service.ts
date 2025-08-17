@@ -18,13 +18,18 @@ export class MentorshipService {
     if (!slot || slot.isBooked) throw new BadRequestException('Slot unavailable')
 
     const session = await this.prisma.$transaction(async (tx) => {
-      const updated = await tx.mentorSlot.update({ where: { id: slotId }, data: { isBooked: true } })
+      const changed = await tx.mentorSlot.updateMany({
+        where: { id: slotId, isBooked: false, updatedAt: slot.updatedAt },
+        data: { isBooked: true }
+      })
+      if (changed.count !== 1) throw new BadRequestException('Slot just booked')
+      const reserved = await tx.mentorSlot.findUnique({ where: { id: slotId } })
       return tx.mentorshipSession.create({
         data: {
           studentId: userId,
-          mentorId: updated.mentorId,
-          slotId: updated.id,
-          scheduledFor: updated.startTime,
+          mentorId: reserved!.mentorId,
+          slotId: reserved!.id,
+          scheduledFor: reserved!.startTime,
           status: 'CONFIRMED'
         }
       })

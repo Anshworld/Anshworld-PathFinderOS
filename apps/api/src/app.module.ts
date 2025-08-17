@@ -11,6 +11,7 @@ import { ProgressModule } from './progress/progress.module'
 import { MentorshipModule } from './mentorship/mentorship.module'
 import { PaymentsModule } from './payments/payments.module'
 import { NotificationsModule } from './notifications/notifications.module'
+import { AiModule } from './ai/ai.module'
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { NotificationsModule } from './notifications/notifications.module'
     ProgressModule,
     MentorshipModule,
     PaymentsModule,
-    NotificationsModule
+    NotificationsModule,
+    AiModule
   ]
 })
 export class AppModule {}

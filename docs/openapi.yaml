@@ -172,6 +172,69 @@ paths:
                 locale: { type: string }
       responses:
         '200': { description: OK }
+  /ai/summarize:
+    post:
+      tags: [ai]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text: { type: string }
+              required: [text]
+      responses:
+        '200': { description: OK }
+  /ai/quiz:
+    post:
+      tags: [ai]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                topic: { type: string }
+                count: { type: integer }
+              required: [topic]
+      responses:
+        '200': { description: OK }
+  /ai/grade:
+    post:
+      tags: [ai]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt: { type: string }
+                answer: { type: string }
+              required: [prompt, answer]
+      responses:
+        '200': { description: OK }
+  /ai/recommend:
+    post:
+      tags: [ai]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                profile: { type: object }
+                history: { type: array, items: { type: object } }
+              required: [profile]
+      responses:
+        '200': { description: OK }
 components:
   securitySchemes:
     bearerAuth:
