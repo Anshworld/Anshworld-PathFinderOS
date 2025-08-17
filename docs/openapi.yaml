@@ -1,0 +1,180 @@
+openapi: 3.0.3
+info:
+  title: PathFinderOS API
+  version: 0.1.0
+servers:
+  - url: http://localhost:3000
+paths:
+  /auth/register:
+    post:
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+                fullName: { type: string }
+              required: [email, password]
+      responses:
+        '201': { description: Registered }
+  /auth/login:
+    post:
+      tags: [auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: { type: string }
+                password: { type: string }
+              required: [email, password]
+      responses:
+        '200': { description: OK }
+  /auth/refresh:
+    post:
+      tags: [auth]
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: OK }
+  /tracks:
+    get:
+      tags: [tracks]
+      responses:
+        '200': { description: OK }
+  /tracks/{id}:
+    get:
+      tags: [tracks]
+      parameters:
+        - in: path
+          name: id
+          schema: { type: string }
+          required: true
+      responses:
+        '200': { description: OK }
+  /enroll:
+    post:
+      tags: [enrollment]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                trackId: { type: string }
+              required: [trackId]
+      responses:
+        '200': { description: OK }
+  /progress/mark:
+    post:
+      tags: [progress]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                sprintId: { type: string }
+                completion: { type: integer }
+              required: [sprintId, completion]
+      responses:
+        '200': { description: OK }
+  /mentors:
+    get:
+      tags: [mentorship]
+      responses:
+        '200': { description: OK }
+  /mentors/{id}/slots:
+    get:
+      tags: [mentorship]
+      parameters:
+        - in: path
+          name: id
+          schema: { type: string }
+          required: true
+      responses:
+        '200': { description: OK }
+  /mentors/book:
+    post:
+      tags: [mentorship]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                slotId: { type: string }
+              required: [slotId]
+      responses:
+        '200': { description: OK }
+  /payments/order:
+    post:
+      tags: [payments]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount: { type: integer }
+                currency: { type: string }
+              required: [amount]
+      responses:
+        '200': { description: OK }
+  /payments:
+    get:
+      tags: [payments]
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: OK }
+  /payments/webhook:
+    post:
+      tags: [payments]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '200': { description: OK }
+  /me:
+    get:
+      tags: [users]
+      security: [{ bearerAuth: [] }]
+      responses:
+        '200': { description: OK }
+    put:
+      tags: [users]
+      security: [{ bearerAuth: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullName: { type: string }
+                avatarUrl: { type: string }
+                locale: { type: string }
+      responses:
+        '200': { description: OK }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

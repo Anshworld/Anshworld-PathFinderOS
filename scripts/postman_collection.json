@@ -1,0 +1,17 @@
+{
+  "info": {
+    "name": "PathFinderOS",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth Register",
+      "request": { "method": "POST", "url": "http://localhost:3000/auth/register", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"Password123!\"\n}" }, "header": [{"key":"Content-Type","value":"application/json"}] }
+    },
+    {
+      "name": "Auth Login",
+      "request": { "method": "POST", "url": "http://localhost:3000/auth/login", "body": { "mode": "raw", "raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"Password123!\"\n}" }, "header": [{"key":"Content-Type","value":"application/json"}] }
+    },
+    { "name": "Tracks List", "request": { "method": "GET", "url": "http://localhost:3000/tracks" } }
+  ]
+}

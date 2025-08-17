@@ -1,0 +1,49 @@
+erDiagram
+  User ||--o{ Enrollment : enrolls
+  User ||--o{ Progress : tracks
+  User ||--o{ SparkCoinTransaction : has
+  User ||--|| Profile : has
+  User ||--o{ MentorSlot : offers
+  User ||--o{ MentorshipSession : participates
+  User ||--o{ Notification : receives
+  User ||--o{ UserBadge : earns
+  User ||--o{ Payment : makes
+  User ||--o{ AdminAuditLog : triggers
+
+  Track ||--o{ Sprint : contains
+  Track ||--o{ Enrollment : has
+
+  Sprint ||--o{ Progress : tracked
+  Sprint ||--o{ Quiz : contains
+  Quiz ||--o{ Question : has
+  Quiz ||--o{ Submission : has
+
+  Project ||--o{ ProjectSubmission : submits
+  DemoDayEvent ||--o{ ProjectSubmission : collects
+
+  User {
+    String id PK
+    String email UK
+    String passwordHash
+    String role
+    DateTime createdAt
+    DateTime updatedAt
+    DateTime deletedAt
+  }
+  Profile {
+    String id PK
+    String userId FK
+    String fullName
+    String avatarUrl
+    String locale
+  }
+  Track {
+    String id PK
+    String type
+    String title
+  }
+  Sprint {
+    String id PK
+    String trackId FK
+    String title
+  }
